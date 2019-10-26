@@ -96,6 +96,8 @@
           // plot all the data points on the SVG
           // and add tooltip functionality
         var plotData = function(map) {
+          console.log(map);
+          console.log(data);
           // get population data as array
           let pop_data = data.map((row) => +row["pop_mlns"]);
           let pop_limits = d3.extent(pop_data);
@@ -121,13 +123,15 @@
               .attr('cx', xMap)
               .attr('cy', yMap)
               .attr('r', (d) => pop_map_func(d["pop_mlns"]))
-              .attr('fill', "#4286f4")
+              .attr('fill', "none")
+              .style('stroke', "#4286f4")
+              .style("stroke-width", "1.5")
               // add tooltip functionality to points
               .on("mouseover", (d) => {
                 div.transition()
                   .duration(200)
                   .style("opacity", .9);
-                div.html("Country: " + d.location + "<br/>" + "Pop: " + numberWithCommas(d["pop_mlns"]*1000000))
+                div.html("Fertility: " + d.fertility_rate + "<br/>" + "Life Expectancy: " + d.life_expectancy + "<br/>" + "Population: " + numberWithCommas(d["pop_mlns"]*1000000) + "<br/>" + "Year of Year: " + d.time + "<br/>" + "Country: " + d.location)
                   .style("left", (d3.event.pageX) + "px")
                   .style("top", (d3.event.pageY - 28) + "px");
               })
